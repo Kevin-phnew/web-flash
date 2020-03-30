@@ -1,6 +1,12 @@
 package cn.enilu.flash.api.utils;
 
+import com.crystaldecisions.sdk.framework.CrystalEnterprise;
+import com.crystaldecisions.sdk.framework.IEnterpriseSession;
+import com.crystaldecisions.sdk.framework.ISessionMgr;
+
 import javax.net.ssl.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URL;
 import java.security.KeyStore;
@@ -81,5 +87,27 @@ public class TicketUtil {
         } finally {
             return null;
         }
+    }
+
+    public static String getWcaToken(HttpServletRequest request) throws Exception {
+        String wcaToken = "";
+        HttpSession session = request.getSession();
+        ISessionMgr sessionMgr;
+        IEnterpriseSession entsession = (IEnterpriseSession) request.getSession().getAttribute("boesession");
+        if (entsession == null) {
+            sessionMgr = CrystalEnterprise.getSessionMgr();
+            //以下userName,password需要改为自己bo登录页面的用户名和密码,ip也要修改为bo所在服务器的ip；
+            String userName = "？？？", passWord = "？？？", ip = "138.6.4.170";
+            entsession = sessionMgr.logon(userName, passWord, ip + ":6400", "secEnterprise");
+            session.setAttribute("boesession", entsession);
+        }
+        request.getSession().setAttribute("boesession", entsession);
+		/* 其中createLogonToken(java.lang.String clientComputerName, int validMinutes, int validNumOfLogons)
+		   clientComputerName为使用这个token的客户端计算机名，空字符串表示该token可被任何客户端使用；
+		   validMinutes为token的有效时间（分钟）；
+		   validNumOfLogons 表示该token允许被使用的最大次数。*/
+        wcaToken = entsession.getLogonTokenMgr().createLogonToken("", 1000, 1000);
+//		wcaToken = entsession.getLogonTokenMgr().createWCAToken("", 1000,1000);//既然提示过期的方法，就可能有问题
+        return wcaToken;
     }
 }

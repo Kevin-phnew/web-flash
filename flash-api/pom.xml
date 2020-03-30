@@ -37,6 +37,27 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>sap</groupId>-->
+        <!--            <artifactId>cecore</artifactId>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${project.basedir}/lib/cecore.jar</systemPath>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>sap</groupId>-->
+        <!--            <artifactId>celib</artifactId>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${project.basedir}/lib/celib.jar</systemPath>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>sap</groupId>-->
+        <!--            <artifactId>cesession</artifactId>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${project.basedir}/lib/cesession.jar</systemPath>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
